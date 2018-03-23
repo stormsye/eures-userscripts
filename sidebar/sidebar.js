@@ -10,6 +10,8 @@ GM_addStyle(GM_getResourceText(sidebarCss));
 createSidebar = function(toggleKey = 120, defaultCollapsed = true) {
     const STATE_OPEN = "expanded";
     const STATE_CLOSED = "collapsed";
+	
+	let actionEntries = [];
 
     let sidebarHtml = `
         <div id="fullSidebar" class="${defaultCollapsed ? STATE_CLOSED : STATE_OPEN}">
@@ -35,8 +37,60 @@ createSidebar = function(toggleKey = 120, defaultCollapsed = true) {
     function toggleSidebar() {
         fullSidebar.toggleClass(`${STATE_OPEN} ${STATE_CLOSED}`);
     }
+	
+	function addActionEntry(actionEntry) {
+		actionEntries.push(actionEntry);
+		loadActionEntry(actionEntry);
+	}
+	
+	function removeActionEntries() {
+		clearSidebarContent();
+		actionEntries.length = 0;
+	}
+	
+	function clearSidebarContent() {
+		fullSidebarContent.empty();
+	}
+	
+	function reloadActionEntries() {
+		clearSidebarContent();
+		actionEntries.forEach((actionEntry) => loadActionEntry(actionEntry));
+	}
+	
+	function loadActionEntry(actionEntry) {
+		if (!window.location.href.includes(actionEntry.urlContains)) {
+			return console.log(`INFO: did not load entry as ${actionEntry.urlContains} is not part of ${window.location.href}`), false;
+		}
+		let button = `<button class="btn" title="${actionEntry.title}">
+                          <i class="fa fa-${actionEntry.icon}" style="color: #fff;"></i>
+                      </button>`;
+        let buttonElem = $(button).click(actionEntry.action);
+        fullSidebarContent.append(buttonElem);
+		
+	}
 
     return {
-        toggleSidebar: toggleSidebar
+        toggleSidebar: toggleSidebar,
+		addActionEntry: addActionEntry,
+		removeActionEntries: removeActionEntries,
+		reloadActionEntries: reloadActionEntries
     };
 };
+
+/*
+  each entry has the structure:
+  {
+	  action		:	function
+	  title			:	?string
+	  urlContains	:	?string
+	  icon			:	?string
+  }
+*/
+createActionEntry = function(action, title, urlContains = '', icon = 'home') {
+	return {
+		title: title,
+        urlContains: urlContains,
+        icon: icon,
+        action: action
+	}
+}
