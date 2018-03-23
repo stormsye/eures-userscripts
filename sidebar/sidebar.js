@@ -20,7 +20,7 @@ createSidebar = function(toggleKey = 120, defaultCollapsed = true) {
         </div>
         `;
 
-    $(document.body).append($.parseHTML(sidebarHtml));
+    $(document.body).append(jQuery.parseHTML(sidebarHtml));
 
     let fullSidebar = $('#fullSidebar');
     let fullSidebarContent = $('#fullSidebarContent');
