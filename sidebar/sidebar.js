@@ -1,7 +1,7 @@
 // The following must be specified on the importing script:
 // @require		http://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js
 // @resource	fontAwesomeCss https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css
-// @resource	sidebarCss https://raw.githubusercontent.com/stormsye/eures-userscripts/0.2.x/sidebar/sidebar.css
+// @resource	sidebarCss https://raw.githubusercontent.com/stormsye/eures-userscripts/0.3.x/sidebar/sidebar.css
 // @grant		GM_addStyle
 // @grant		GM_getResourceText
 
@@ -20,7 +20,7 @@ createSidebar = function(toggleKey = 120, defaultCollapsed = true) {
         </div>
         `;
 
-    $("body").append(sidebarHtml);
+    $(document.body).append(sidebarHtml);
 
     let fullSidebar = $('#fullSidebar');
     let fullSidebarContent = $('#fullSidebarContent');
