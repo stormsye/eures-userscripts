@@ -5,7 +5,7 @@
 // @grant		GM_addStyle
 // @grant		GM_getResourceText
 
-GM_addStyle(GM_getResourceText(sidebarCss));
+GM_addStyle(GM_getResourceText('sidebarCss'));
 
 createSidebar = function(toggleKey = 120, defaultCollapsed = true) {
     const STATE_OPEN = "expanded";
